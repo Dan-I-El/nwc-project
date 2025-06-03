@@ -14,12 +14,14 @@ class LoginPage extends HTMLElement {
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required>
           
-          <button type="submit">Login</button>
+          <button id="login-button" type="submit">Login</button>
         </form>
 
         <button name="reset-page" id="reset-button">Forgot Password?</a>
       </div>
     `;
+
+    this.form = this.querySelector('#login-form');
 
     this.#addNavigationListener();
 
@@ -41,9 +43,25 @@ class LoginPage extends HTMLElement {
 
   #addSubmitionListener() {
 
-    this.querySelector('#login-form').addEventListener('submit', () => {});
+    this.form.addEventListener('submit', (event) => this.#handleSubmit(event));
 
   };
+
+  #handleSubmit(event) {
+
+    event.preventDefault();
+
+    const formData = new FormData(this.form);
+
+    const data = Object.fromEntries(formData);
+
+    console.log('Login data:', data);
+
+    document.dispatchEvent(navigationEvent('profile-page'));
+
+    this.form.reset();
+
+  }
   
 }
 

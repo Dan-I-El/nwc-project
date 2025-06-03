@@ -18,29 +18,34 @@ class ResetPage extends HTMLElement {
       </div>
     `;
 
-    this.#addNavigationListener();
+    this.form = this.querySelector('#reset-form');
 
     this.#addSubmitionListener();
     
   };
-  
-  #addNavigationListener() {
-    
-    this.querySelector('#return-button').addEventListener('click', (event) => {
-  
-      event.preventDefault();
-  
-      document.dispatchEvent(navigationEvent(event.target.name));
-  
-    });
 
-  };
 
   #addSubmitionListener() {
 
-    this.querySelector('#reset-form').addEventListener('submit', () => {});
+    this.form.addEventListener('submit', (event) => this.#handleSubmit(event));
 
   };
+
+  #handleSubmit(event) {
+
+    event.preventDefault();
+
+    const formData = new FormData(this.form);
+
+    const data = Object.fromEntries(formData);
+
+    console.log('New password:', data);
+
+    document.dispatchEvent(navigationEvent('login-page'));
+
+    this.form.reset();
+
+  }
 
 };
 

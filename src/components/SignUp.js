@@ -22,29 +22,34 @@ class SignUpPage extends HTMLElement {
       </div>
     `;
 
-    this.#addNavigationListener();
+    this.form = this.querySelector('#signup-form');
 
     this.#addSubmitionListener();
     
   };
   
-  #addNavigationListener() {
-    
-    this.querySelector('#signup-button').addEventListener('click', (event) => {
-  
-      event.preventDefault();
-  
-      document.dispatchEvent(navigationEvent(event.target.name));
-  
-    });
-
-  };
 
   #addSubmitionListener() {
 
-    this.querySelector('#signup-form').addEventListener('submit', () => {});
+    this.form.addEventListener('submit', (event) => this.#handleSubmit(event));
 
   };
+
+  #handleSubmit(event) {
+
+    event.preventDefault();
+
+    const formData = new FormData(this.form);
+
+    const data = Object.fromEntries(formData);
+
+    console.log('Sign Up data:', data);
+
+    document.dispatchEvent(navigationEvent('main-page'));
+
+    this.form.reset();
+
+  }
     
 }
 
