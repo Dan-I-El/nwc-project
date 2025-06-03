@@ -1,5 +1,3 @@
-import { navigationEvent } from '../utilities/events.js';
-
 class ProfilePage extends HTMLElement {
 
   connectedCallback() {
