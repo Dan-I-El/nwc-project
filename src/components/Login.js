@@ -1,3 +1,5 @@
+import { navigationEvent } from '../utilities/events.js';
+
 class LoginPage extends HTMLElement {
 
   connectedCallback() {
@@ -15,12 +17,34 @@ class LoginPage extends HTMLElement {
           <button type="submit">Login</button>
         </form>
 
-        <a href="reset.html">Forgot Password?</a>
+        <button name="reset-page" id="reset-button">Forgot Password?</a>
       </div>
     `;
 
-    document.getElementById('login-form').addEventListener('submit', this.handleSubmit);
-  }
+    this.#addNavigationListener();
+
+    this.#addSubmitionListener();
+
+  };
+
+  #addNavigationListener() {
+    
+    this.querySelector('#reset-button').addEventListener('click', (event) => {
+  
+      event.preventDefault();
+  
+      document.dispatchEvent(navigationEvent(event.target.name));
+  
+    });
+
+  };
+
+  #addSubmitionListener() {
+
+    this.querySelector('#login-form').addEventListener('submit', () => {});
+
+  };
+  
 }
 
 export default LoginPage;

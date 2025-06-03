@@ -1,3 +1,5 @@
+import { navigationEvent } from '../utilities/events.js';
+
 class SignUpPage extends HTMLElement {
 
   connectedCallback() {
@@ -15,14 +17,35 @@ class SignUpPage extends HTMLElement {
           <label for="password">Password:</label>
           <input type="password" id="password" name="password" required>
           
-          <button type="submit">Sign Up</button>
+          <button id="signup-button" type="submit">Sign Up</button>
         </form>
       </div>
     `;
 
-    this.getElementById('signup-form').addEventListener('submit', this.handleSubmit);
+    this.#addNavigationListener();
+
+    this.#addSubmitionListener();
     
-  } 
+  };
+  
+  #addNavigationListener() {
+    
+    this.querySelector('#signup-button').addEventListener('click', (event) => {
+  
+      event.preventDefault();
+  
+      document.dispatchEvent(navigationEvent(event.target.name));
+  
+    });
+
+  };
+
+  #addSubmitionListener() {
+
+    this.querySelector('#signup-form').addEventListener('submit', () => {});
+
+  };
+    
 }
 
 export default SignUpPage;
